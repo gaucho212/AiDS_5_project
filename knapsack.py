@@ -12,7 +12,11 @@ class Knapsack:
                 if self.items[i - 1].weight > w:
                     dp[i][w] = dp[i - 1][w]
                 else:
-                    dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - self.items[i - 1].weight] + self.items[i - 1].value)
+                    dp[i][w] = max(
+                        dp[i - 1][w],
+                        dp[i - 1][w - self.items[i - 1].weight]
+                        + self.items[i - 1].value,
+                    )
 
         # Cofanie się, aby znaleźć wybrane przedmioty
         included_items = []
@@ -40,7 +44,12 @@ class Knapsack:
             recurse(index + 1, current_weight, current_value, current_subset)
             # Włączenie przedmiotu, jeśli się mieści
             if current_weight + self.items[index].weight <= self.capacity:
-                recurse(index + 1, current_weight + self.items[index].weight, current_value + self.items[index].value, current_subset + [index])
+                recurse(
+                    index + 1,
+                    current_weight + self.items[index].weight,
+                    current_value + self.items[index].value,
+                    current_subset + [index],
+                )
 
         recurse(0, 0, 0, [])
         return max_value, best_subset

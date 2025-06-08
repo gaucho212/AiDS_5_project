@@ -18,9 +18,15 @@ def read_knapsack_data(filename):
 if __name__ == "__main__":
     action = ""
     generate_item()
-    knapsack = read_knapsack_data("knapsack_data.txt")
+    try:
+        knapsack = read_knapsack_data("knapsack_data.txt")
+    except FileNotFoundError:
+        print(
+            "Plik 'knapsack_data.txt' nie został znaleziony. Upewnij się, że plik istnieje."
+        )
+        sys.exit(1)
     while True:
-        print("action>", end="")
+        print("action> ", end="")
         action = input().strip()
         if action.lower() == "print":
             print("Dane plecaka:")
@@ -28,21 +34,24 @@ if __name__ == "__main__":
             print(f"Liczba przedmiotów: {len(knapsack.items)}")
             print("Przedmioty (wartość, waga):")
             for i, item in enumerate(knapsack.items):
-                print(f"  {i}: ({item.value}, {item.weight})")
+                try:
+                    print(f"  {i}: ({item.value}, {item.weight})")
+                except AttributeError as e:
+                    print(f"  Błąd odczytu przedmiotu {i}: {e}")
 
-        if action.lower() == "dynamic":
+        elif action.lower() == "dynamic":
             print("Rozwiązanie metodą programowania dynamicznego:")
             dp_value, dp_items = knapsack.dynamic_programming()
             print(f"Maksymalna wartość: {dp_value}")
             print("Wybrane przedmioty (indeksy):", dp_items)
-        if action.lower() == "brute":
+        elif action.lower() == "brute":
             print("\nRozwiązanie metodą siłową:")
             bf_value, bf_items = knapsack.brute_force()
             print(f"Maksymalna wartość: {bf_value}")
             print("Wybrane przedmioty (indeksy):", bf_items)
-        if action.lower() == "exit":
+        elif action.lower() == "exit":
             sys.exit(0)
-        if action.lower() == "help":
+        elif action.lower() == "help":
             print("Dostępne komendy:")
             print("  print - wyświetla dane plecaka")
             print("  dynamic - rozwiązuje problem metodą programowania dynamicznego")
