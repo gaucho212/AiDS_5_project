@@ -57,7 +57,7 @@ if __name__ == "__main__":
             print("  dynamic - rozwiązuje problem metodą programowania dynamicznego")
             print("  brute - rozwiązuje problem metodą siłową")
             print("  exit - kończy program")
-            print("  help - wyświetla tę pomoc")
+            print("  help - wyświetla tę pomoc") 
         else:
             print("Nieznana komenda. Wpisz 'help' aby zobaczyć dostępne komendy.")
         print()
